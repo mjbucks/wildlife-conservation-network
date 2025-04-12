@@ -1,0 +1,251 @@
+.sensor-panel {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.sensor-panel h2 {
+  margin-bottom: 24px;
+}
+
+.network-overview {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.stat-box {
+  background-color: white;
+  padding: 15px;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.stat-box h3 {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+.stat-box p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.sensor-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.sensor-node {
+  background-color: white;
+  padding: 15px;
+  border-radius: 4px;
+  border-left: 4px solid;
+}
+
+.sensor-node.active {
+  border-left-color: #68D391;
+}
+
+.sensor-node.warning {
+  border-left-color: #F6AD55;
+}
+
+.sensor-node.error {
+  border-left-color: #F56565;
+}
+
+.node-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+}
+
+.node-info p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #4A5568;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+/* Restored original button styling */
+.primary-button {
+  padding: 10px 20px;
+  background-color: #86A873; /* wildlife-safe olive */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.primary-button:hover {
+  background-color: #748F62; /* darker olive */
+}
+
+.battery-level {
+  color: #4A5568;
+}
+
+.last-seen {
+  color: #718096;
+  font-size: 0.85rem;
+}
+
+.signal-strength {
+  color: #4A5568;
+}
+
+/* Network Overview Card */
+.network-status {
+  margin-bottom: 2rem;
+}
+
+.status-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.status-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #4C6A92;
+}
+
+.status-item .value {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3B7A57;
+  margin-top: 0.25rem;
+}
+
+/* Sensor Node List */
+.sensor-list {
+  margin-bottom: 2rem;
+}
+
+.sensor-list h3 {
+  font-family: 'Roboto Slab', serif;
+  color: #3B7A57;
+  margin-bottom: 1.5rem;
+}
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.node-name {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+  color: #3B7A57;
+}
+
+.node-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #4C6A92;
+}
+
+.node-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #4C6A92;
+}
+
+/* Action Buttons */
+.network-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.network-actions button {
+  padding: 0.75rem;
+  background-color: #3B7A57;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.network-actions button:hover {
+  background-color: #A3BE8C;
+}
+
+.sensor-info {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.sensor-info h3 {
+  color: #3B7A57;
+  margin-bottom: 0.75rem;
+}
+
+.sensor-info p {
+  color: #4C6A92;
+  margin: 0.5rem 0;
+}
+
+.sensor-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sensor-actions button {
+  padding: 0.75rem;
+  border: none;
+  background-color: #3B7A57;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.sensor-actions button:hover {
+  background-color: #A3BE8C;
+  transform: translateY(-1px);
+}
+
+/* Headers - conservation report style */
+.sensor-panel h2,
+.sensor-info h3 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+}
+
+/* Info text - UI text */
+.sensor-info p {
+  font-family: 'Inter', sans-serif;
+} 
