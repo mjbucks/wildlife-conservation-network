@@ -1,63 +1,63 @@
 import React from 'react';
 import '../styles/AlertsSidebar.css';
 
-function AlertsSidebar({ alerts, activeFilter, setActiveFilter, setSelectedAlert }) {
-  // Filter options for the dropdown
-  const filterOptions = [
-    { value: 'all', label: 'All Alerts' },
-    { value: 'unacknowledged', label: 'Unacknowledged' },
-    { value: 'acknowledged', label: 'Acknowledged' },
-    { value: 'ignored', label: 'Ignored' },
-    { value: 'dispatched', label: 'Dispatched' }
-  ];
-
-  // Filter alerts based on activeFilter
+const AlertsSidebar = ({ alerts, activeFilter, setActiveFilter, setSelectedAlert }) => {
   const filteredAlerts = activeFilter === 'all' 
     ? alerts 
-    : alerts.filter(alert => alert.status === activeFilter);
+    : alerts.filter(alert => alert.type === activeFilter);
 
   return (
-    <div className="alerts-sidebar">
-      <div className="alerts-header">
-        <h2>Recent Alerts</h2>
-        <select 
-          value={activeFilter}
-          onChange={(e) => setActiveFilter(e.target.value)}
-          className="filter-select"
+    <aside className="alerts-panel">
+      <h2>Recent Alerts</h2>
+      <div className="alert-filters">
+        <button 
+          className={activeFilter === 'all' ? 'active' : ''}
+          onClick={() => setActiveFilter('all')}
         >
-          {filterOptions.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          All
+        </button>
+        <button 
+          className={activeFilter === 'gunshot' ? 'active' : ''}
+          onClick={() => setActiveFilter('gunshot')}
+        >
+          Gunshots
+        </button>
+        <button 
+          className={activeFilter === 'chainsaw' ? 'active' : ''}
+          onClick={() => setActiveFilter('chainsaw')}
+        >
+          Chainsaws
+        </button>
+        <button 
+          className={activeFilter === 'vehicle' ? 'active' : ''}
+          onClick={() => setActiveFilter('vehicle')}
+        >
+          Vehicles
+        </button>
+        <button 
+          className={activeFilter === 'human' ? 'active' : ''}
+          onClick={() => setActiveFilter('human')}
+        >
+          Human
+        </button>
       </div>
-
       <div className="alerts-list">
         {filteredAlerts.map(alert => (
           <div 
-            key={alert.id}
-            className={`alert-item ${alert.status}`}
+            key={alert.id} 
+            className={`alert-item ${alert.type} ${alert.status}`}
             onClick={() => setSelectedAlert(alert)}
           >
-            <div className="alert-content">
-              <div className="alert-type">
-                {alert.type.charAt(0).toUpperCase() + alert.type.slice(1)}
-              </div>
-              <div className="alert-location">{alert.location}</div>
-              <div className="alert-status">
-                {alert.status.charAt(0).toUpperCase() + alert.status.slice(1)}
-              </div>
-              <div className="alert-time">{alert.time}</div>
-              <div className="alert-confidence">
-                Confidence: {alert.confidence}
-              </div>
-            </div>
+            <span className="alert-type">{alert.type.toUpperCase()}</span>
+            <span className="alert-status">{alert.status.toUpperCase()}</span>
+            <span className="alert-time">{alert.time}</span>
+            <div className="alert-location">{alert.location}</div>
+            <div className="alert-confidence">Confidence: {alert.confidence}</div>
           </div>
         ))}
       </div>
-    </div>
+    </aside>
   );
-}
+};
 
-export default AlertsSidebar; 
+export default AlertsSidebar;

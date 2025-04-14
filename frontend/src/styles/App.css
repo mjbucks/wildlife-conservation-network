@@ -29,6 +29,11 @@ body {
   height: 60px;
 }
 
+.dashboard-header h1 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+}
+
 .system-status {
   display: flex;
   align-items: center;
@@ -53,9 +58,3 @@ body {
   overflow: hidden;
   height: calc(100vh - 60px); /* Subtract header height */
 }
-
-/* Header styles */
-.dashboard-header h1 {
-  font-family: 'Roboto Slab', serif;
-  font-weight: 600;
-} 

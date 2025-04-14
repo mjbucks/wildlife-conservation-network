@@ -1,0 +1,68 @@
+/* Add to your existing CSS */
+.header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.alerts-sidebar {
+  width: 300px;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.alert-item {
+  background: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.alert-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.map-view {
+  flex: 1;
+  padding: 1rem;
+  min-height: 400px;
+}
+
+.map-placeholder {
+  background-color: #e9ecef;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.sensor-panel {
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+
+.sensor-item {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.status-indicator {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+.status-indicator.active { background-color: #00C851; }
+.status-indicator.inactive { background-color: #ff4444; }
+.status-indicator.warning { background-color: #ffbb33; }
+.status-indicator.error { background-color: #ff4444; }

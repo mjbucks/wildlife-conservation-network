@@ -25,4 +25,4 @@ const AlertNotification = ({ alert, onAction }) => {
   );
 };
 
-export default AlertNotification; 
+export default AlertNotification;

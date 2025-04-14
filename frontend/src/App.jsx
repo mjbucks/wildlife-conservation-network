@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import AlertsSidebar from './components/AlertsSidebar.jsx'
-import MapView from './components/MapView.jsx'
-import SensorPanel from './components/SensorPanel.jsx'
-import AlertNotification from './components/AlertNotification.jsx'
+import AlertsSidebar from './components/AlertsSidebar'
+import MapView from './components/MapView'
+import SensorPanel from './components/SensorPanel'
+import AlertNotification from './components/AlertNotification'
 import './styles/App.css'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       time: '2 mins ago',
       location: 'Node #12',
       confidence: '95%',
-      status: 'unacknowledged' // can be: unacknowledged, acknowledged, ignored, dispatched
+      status: 'unacknowledged'
     },
     {
       id: 2,
@@ -56,6 +56,10 @@ function App() {
       {/* Header with system status and quick actions */}
       <header className="dashboard-header">
         <h1>PPDS Ranger Dashboard</h1>
+        <div className="system-status">
+          <span className="status-indicator active"></span>
+          <span>System Status: Active</span>
+        </div>
       </header>
 
       <main className="dashboard-content">
@@ -77,4 +81,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
