@@ -34,20 +34,11 @@ body {
   font-weight: 600;
 }
 
-.system-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.status-indicator {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.status-indicator.active {
-  background-color: #86A873;
+.dashboard-header .logo {
+  height: 72px; /* Increased size */
+  padding-right: 1%;
+  width: auto;
+  transition: transform 0.2s ease;
 }
 
 /* Main content layout */

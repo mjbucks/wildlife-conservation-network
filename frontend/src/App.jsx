@@ -53,13 +53,9 @@ function App() {
 
   return (
     <div className="dashboard">
-      {/* Header with system status and quick actions */}
       <header className="dashboard-header">
         <h1>PPDS Ranger Dashboard</h1>
-        <div className="system-status">
-          <span className="status-indicator active"></span>
-          <span>System Status: Active</span>
-        </div>
+        <img src="/images/PPDS-logo-PNG.jpg" alt="PPDS Logo" className="logo" />
       </header>
 
       <main className="dashboard-content">
