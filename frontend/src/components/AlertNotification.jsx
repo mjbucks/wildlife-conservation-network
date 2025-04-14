@@ -1,28 +1,33 @@
 import React from 'react';
 import '../styles/AlertNotification.css';
 
-const AlertNotification = ({ alert, onAction }) => {
-  if (!alert) return null;
+function AlertNotification({ alert, onClose, onAction }) {
+  const handleAction = async (status) => {
+    await onAction(alert._id, status);
+    onClose(); // Ensure the card closes after action
+  };
 
   return (
     <div className="alert-notification">
-      <h3>New Alert: {alert.type.toUpperCase()}</h3>
-      <p>Location: {alert.location}</p>
-      <p>Time: {alert.time}</p>
-      <p>Confidence: {alert.confidence}</p>
-      <div className="alert-actions">
-        <button onClick={() => onAction(alert.id, 'acknowledged')}>
-          Acknowledge
-        </button>
-        <button onClick={() => onAction(alert.id, 'dispatched')}>
-          Dispatch Team
-        </button>
-        <button onClick={() => onAction(alert.id, 'ignored')}>
-          Ignore
-        </button>
+      <div className="alert-notification-content">
+        <h3>Alert Action Required</h3>
+        <p>Node: {alert.nodeId}</p>
+        <p>Type: {alert.type}</p>
+        <p>Location: {alert.location}</p>
+        <div className="alert-actions">
+          <button onClick={() => handleAction('acknowledged')}>
+            Acknowledge
+          </button>
+          <button onClick={() => handleAction('dispatched')}>
+            Dispatch Team
+          </button>
+          <button onClick={onClose} className="cancel-btn">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default AlertNotification;

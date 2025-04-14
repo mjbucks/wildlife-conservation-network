@@ -1,63 +1,42 @@
 import React from 'react';
 import '../styles/AlertsSidebar.css';
 
-const AlertsSidebar = ({ alerts, activeFilter, setActiveFilter, setSelectedAlert }) => {
-  const filteredAlerts = activeFilter === 'all' 
-    ? alerts 
-    : alerts.filter(alert => alert.type === activeFilter);
+function AlertsSidebar({ alerts, onAlertSelect, activeFilter }) {
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp)
+    return date.toLocaleString()
+  }
+
+  const formatCoordinates = (coords) => {
+    return `${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`
+  }
 
   return (
-    <aside className="alerts-panel">
+    <div className="alerts-sidebar">
       <h2>Recent Alerts</h2>
-      <div className="alert-filters">
-        <button 
-          className={activeFilter === 'all' ? 'active' : ''}
-          onClick={() => setActiveFilter('all')}
-        >
-          All
-        </button>
-        <button 
-          className={activeFilter === 'gunshot' ? 'active' : ''}
-          onClick={() => setActiveFilter('gunshot')}
-        >
-          Gunshots
-        </button>
-        <button 
-          className={activeFilter === 'chainsaw' ? 'active' : ''}
-          onClick={() => setActiveFilter('chainsaw')}
-        >
-          Chainsaws
-        </button>
-        <button 
-          className={activeFilter === 'vehicle' ? 'active' : ''}
-          onClick={() => setActiveFilter('vehicle')}
-        >
-          Vehicles
-        </button>
-        <button 
-          className={activeFilter === 'human' ? 'active' : ''}
-          onClick={() => setActiveFilter('human')}
-        >
-          Human
-        </button>
-      </div>
       <div className="alerts-list">
-        {filteredAlerts.map(alert => (
+        {alerts.map(alert => (
           <div 
-            key={alert.id} 
-            className={`alert-item ${alert.type} ${alert.status}`}
-            onClick={() => setSelectedAlert(alert)}
+            key={alert._id} 
+            className={`alert-card ${alert.status}`}
+            onClick={() => onAlertSelect(alert)}
           >
-            <span className="alert-type">{alert.type.toUpperCase()}</span>
-            <span className="alert-status">{alert.status.toUpperCase()}</span>
-            <span className="alert-time">{alert.time}</span>
-            <div className="alert-location">{alert.location}</div>
-            <div className="alert-confidence">Confidence: {alert.confidence}</div>
+            <div className="alert-header">
+              <span className={`alert-type ${alert.type}`}>{alert.type}</span>
+              <span className="alert-time">{formatTime(alert.timestamp)}</span>
+            </div>
+            <div className="alert-details">
+              <p><strong>Node:</strong> {alert.nodeId}</p>
+              <p><strong>Location:</strong> {alert.location}</p>
+              <p><strong>Coordinates:</strong> {formatCoordinates(alert.coordinates)}</p>
+              <p><strong>Confidence:</strong> {(alert.confidence * 100).toFixed(1)}%</p>
+              <p><strong>Status:</strong> {alert.status}</p>
+            </div>
           </div>
         ))}
       </div>
-    </aside>
+    </div>
   );
-};
+}
 
 export default AlertsSidebar;

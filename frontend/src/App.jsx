@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AlertsSidebar from './components/AlertsSidebar'
 import MapView from './components/MapView'
 import SensorPanel from './components/SensorPanel'
@@ -6,49 +6,56 @@ import AlertNotification from './components/AlertNotification'
 import './styles/App.css'
 
 function App() {
-  // State for managing alerts and sensor data
-  const [alerts, setAlerts] = useState([
-    {
-      id: 1,
-      type: 'gunshot',
-      time: '2 mins ago',
-      location: 'Node #12',
-      confidence: '95%',
-      status: 'unacknowledged'
-    },
-    {
-      id: 2,
-      type: 'chainsaw',
-      time: '15 mins ago',
-      location: 'Node #8',
-      confidence: '88%',
-      status: 'unacknowledged'
-    },
-    {
-      id: 3,
-      type: 'vehicle',
-      time: '30 mins ago',
-      location: 'Node #5',
-      confidence: '92%',
-      status: 'unacknowledged'
-    },
-    {
-      id: 4,
-      type: 'human',
-      time: '45 mins ago',
-      location: 'Node #3',
-      confidence: '85%',
-      status: 'unacknowledged'
-    }
-  ])
+  const [alerts, setAlerts] = useState([])
   const [selectedAlert, setSelectedAlert] = useState(null)
   const [activeFilter, setActiveFilter] = useState('all')
 
-  const handleAlertAction = (alertId, newStatus) => {
-    setAlerts(alerts.map(alert => 
-      alert.id === alertId ? { ...alert, status: newStatus } : alert
-    ))
-    setSelectedAlert(null) // Close the popup
+  useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/alerts')
+        if (!response.ok) {
+          throw new Error('Failed to fetch alerts')
+        }
+        const data = await response.json()
+        setAlerts(data)
+      } catch (error) {
+        console.error('Error fetching alerts:', error)
+      }
+    }
+
+    fetchAlerts()
+    // Set up polling every 30 seconds
+    const interval = setInterval(fetchAlerts, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const handleAlertAction = async (alertId, newStatus) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/alerts/${alertId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update alert status')
+      }
+
+      setAlerts(alerts.map(alert => 
+        alert._id === alertId ? { ...alert, status: newStatus } : alert
+      ))
+      setSelectedAlert(null)
+      fetchAlerts()
+    } catch (error) {
+      console.error('Error updating alert:', error)
+    }
+  }
+
+  const handleAlertSelect = (alert) => {
+    setSelectedAlert(alert)
   }
 
   return (
@@ -57,22 +64,22 @@ function App() {
         <h1>PPDS Ranger Dashboard</h1>
         <img src="/images/PPDS-logo-PNG.jpg" alt="PPDS Logo" className="logo" />
       </header>
-
-      <main className="dashboard-content">
-        <AlertsSidebar 
-          alerts={alerts}
-          activeFilter={activeFilter}
-          setActiveFilter={setActiveFilter}
-          setSelectedAlert={setSelectedAlert}
-        />
-        <MapView />
+      
+      <div className="page-content">
+        <AlertsSidebar alerts={alerts} onAlertSelect={handleAlertSelect} />
+        <main className="main-content">
+          <MapView />
+        </main>
         <SensorPanel />
-      </main>
-
-      <AlertNotification 
-        alert={selectedAlert}
-        onAction={handleAlertAction}
-      />
+      </div>
+      
+      {selectedAlert && (
+        <AlertNotification
+          alert={selectedAlert}
+          onClose={() => setSelectedAlert(null)}
+          onAction={handleAlertAction}
+        />
+      )}
     </div>
   )
 }

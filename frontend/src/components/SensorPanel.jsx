@@ -30,7 +30,6 @@ const SensorPanel = () => {
       {/* Sensor List */}
       <div className="sensor-list">
         <h3>Sensor Nodes</h3>
-        {/* Each node is clickable to show details */}
         <div className="sensor-node active">
           <div className="node-header">
             <span className="node-name">Node #12</span>

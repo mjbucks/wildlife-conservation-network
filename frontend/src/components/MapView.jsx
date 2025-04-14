@@ -1,20 +1,23 @@
 import React from 'react';
 import '../styles/MapView.css';
 
-const MapView = () => {
+function MapView() {
   return (
-    <section className="map-container">
-      <div className="map">
-        {/* Map component will be integrated here */}
-        <p>Map View</p>
+    <div className="map-container">
+      <div className="map-placeholder">
+        <img 
+          src="/images/PPDS-logo-PNG.jpg" 
+          alt="Map Placeholder" 
+          className="map-placeholder-image"
+        />
       </div>
       <div className="map-controls">
         <button>Zoom In</button>
         <button>Zoom Out</button>
         <button>Center View</button>
       </div>
-    </section>
+    </div>
   );
-};
+}
 
 export default MapView;
