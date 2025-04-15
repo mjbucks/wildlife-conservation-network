@@ -1,79 +1,62 @@
 import React from 'react';
 import '../styles/SensorPanel.css';
 
-const SensorPanel = () => {
+function SensorPanel({ nodes, networkStats }) {
+  const formatTime = (timestamp) => {
+    if (!timestamp) return 'No data';
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMinutes = Math.floor((now - date) / (1000 * 60));
+    
+    if (diffMinutes < 60) {
+      return `${diffMinutes}m ago`;
+    } else {
+      return date.toLocaleString();
+    }
+  };
+
   return (
-    <aside className="sensor-panel">
+    <div className="sensor-panel">
       <h2>Sensor Network</h2>
       
-      {/* Network Overview */}
-      <div className="network-status">
-        <div className="status-card">
-          <h3>Network Health</h3>
-          <div className="status-grid">
-            <div className="status-item">
-              <span>Active Nodes</span>
-              <span className="value">15/16</span>
-            </div>
-            <div className="status-item">
-              <span>Battery Average</span>
-              <span className="value">82%</span>
-            </div>
-            <div className="status-item">
-              <span>Coverage</span>
-              <span className="value">95%</span>
-            </div>
+      <div className="network-health">
+        <h3>Network Health</h3>
+        <div className="stats-grid">
+          <div className="stat">
+            <span className="stat-label">Active Nodes</span>
+            <span className="stat-value">{networkStats.activeNodes}/{networkStats.totalNodes}</span>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Battery Average</span>
+            <span className="stat-value">{networkStats.batteryAvg}%</span>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Coverage</span>
+            <span className="stat-value">{networkStats.coverage}%</span>
           </div>
         </div>
       </div>
 
-      {/* Sensor List */}
-      <div className="sensor-list">
+      <div className="sensor-nodes">
         <h3>Sensor Nodes</h3>
-        <div className="sensor-node active">
-          <div className="node-header">
-            <span className="node-name">Node #12</span>
-            <span className="node-status">Active</span>
+        {nodes.map(node => (
+          <div key={node._id} className={`node-card ${node.status.toLowerCase()}`}>
+            <div className="node-header">
+              <span className="node-name">Node #{node.nodeId}</span>
+              <span className={`node-status ${node.status.toLowerCase()}`}>
+                {node.status}
+              </span>
+            </div>
+            <div className="node-details">
+              <p><strong>Battery:</strong> {node.batteryLevel}%</p>
+              <p><strong>Last Heartbeat:</strong> {formatTime(node.lastHeartbeat)}</p>
+              <p><strong>Coordinates:</strong> {node.coordinates.latitude.toFixed(4)}, {node.coordinates.longitude.toFixed(4)}</p>
+            </div>
           </div>
-          <div className="node-details">
-            <span>Battery: 85%</span>
-            <span>Last Alert: 2m ago</span>
-            <span>Signal: Strong</span>
-          </div>
-        </div>
-
-        <div className="sensor-node warning">
-          <div className="node-header">
-            <span className="node-name">Node #8</span>
-            <span className="node-status">Low Battery</span>
-          </div>
-          <div className="node-details">
-            <span>Battery: 15%</span>
-            <span>Last Alert: 15m ago</span>
-            <span>Signal: Medium</span>
-          </div>
-        </div>
-
-        <div className="sensor-node error">
-          <div className="node-header">
-            <span className="node-name">Node #3</span>
-            <span className="node-status">Offline</span>
-          </div>
-          <div className="node-details">
-            <span>Last Seen: 2h ago</span>
-            <span>Signal: None</span>
-          </div>
-        </div>
+        ))}
       </div>
-
-      {/* Quick Actions */}
-      <div className="network-actions">
-        <button>Run Diagnostics</button>
-        <button>Configure Alerts</button>
-        <button>Download Report</button>
-      </div>
-    </aside>
+    </div>
   );
-};
+}
 
 export default SensorPanel;

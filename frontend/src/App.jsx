@@ -7,8 +7,46 @@ import './styles/App.css'
 
 function App() {
   const [alerts, setAlerts] = useState([])
+  const [nodes, setNodes] = useState([])
   const [selectedAlert, setSelectedAlert] = useState(null)
   const [activeFilter, setActiveFilter] = useState('all')
+
+  // Fetch nodes data
+  const fetchNodes = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/nodes')
+      if (!response.ok) {
+        throw new Error('Failed to fetch nodes')
+      }
+      const data = await response.json()
+      setNodes(data)
+    } catch (error) {
+      console.error('Error fetching nodes:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchNodes()
+    // Set up polling every 30 seconds
+    const interval = setInterval(fetchNodes, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Calculate network health stats
+  const calculateNetworkStats = () => {
+    if (!nodes.length) return { activeNodes: 0, totalNodes: 0, batteryAvg: 0, coverage: 0 }
+    
+    const activeNodes = nodes.filter(node => node.status === 'active').length
+    const batterySum = nodes.reduce((sum, node) => sum + node.batteryLevel, 0)
+    const batteryAvg = batterySum / nodes.length
+    
+    return {
+      activeNodes,
+      totalNodes: nodes.length,
+      batteryAvg: Math.round(batteryAvg),
+      coverage: Math.round((activeNodes / nodes.length) * 100)
+    }
+  }
 
   useEffect(() => {
     const fetchAlerts = async () => {
@@ -68,9 +106,9 @@ function App() {
       <div className="page-content">
         <AlertsSidebar alerts={alerts} onAlertSelect={handleAlertSelect} />
         <main className="main-content">
-          <MapView />
+          <MapView nodes={nodes} />
         </main>
-        <SensorPanel />
+        <SensorPanel nodes={nodes} networkStats={calculateNetworkStats()} />
       </div>
       
       {selectedAlert && (
