@@ -21,6 +21,9 @@ function AlertNotification({ alert, onClose, onAction }) {
           <button onClick={() => handleAction('dispatched')}>
             Dispatch Team
           </button>
+          <button onClick={() => handleAction('ignored')} className="ignore-btn">
+            Ignore
+          </button>
           <button onClick={onClose} className="cancel-btn">
             Cancel
           </button>

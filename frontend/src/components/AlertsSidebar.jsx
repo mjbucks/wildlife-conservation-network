@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/AlertsSidebar.css';
 
-function AlertsSidebar({ alerts, onAlertSelect, activeFilter }) {
+function AlertsSidebar({ alerts, onAlertSelect }) {
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  const filteredAlerts = alerts.filter(alert => {
+    if (statusFilter === 'all') return true;
+    return alert.status === statusFilter;
+  });
+
   const formatTime = (timestamp) => {
-    const date = new Date(timestamp)
-    return date.toLocaleString()
-  }
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  };
 
   const formatCoordinates = (coords) => {
     return `${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`
@@ -14,8 +21,21 @@ function AlertsSidebar({ alerts, onAlertSelect, activeFilter }) {
   return (
     <div className="alerts-sidebar">
       <h2>Recent Alerts</h2>
+      <div className="status-filter">
+        <select 
+          value={statusFilter} 
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="filter-select"
+        >
+          <option value="all">All Alerts</option>
+          <option value="unacknowledged">Unacknowledged</option>
+          <option value="acknowledged">Acknowledged</option>
+          <option value="dispatched">Dispatched</option>
+          <option value="ignored">Ignored</option>
+        </select>
+      </div>
       <div className="alerts-list">
-        {alerts.map(alert => (
+        {filteredAlerts.map(alert => (
           <div 
             key={alert._id} 
             className={`alert-card ${alert.status}`}

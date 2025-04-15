@@ -129,6 +129,7 @@ body {
   min-width: 300px;
 }
 
+/* Update alert action buttons */
 .alert-actions {
   display: flex;
   gap: 10px;
@@ -141,10 +142,16 @@ body {
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  transition: background-color 0.2s;
 }
 
-.alert-actions button:not(.cancel-btn) {
+.alert-actions button:not(.cancel-btn):not(.ignore-btn) {
   background-color: #3B7A57;
+  color: white;
+}
+
+.alert-actions .ignore-btn {
+  background-color: #757575;
   color: white;
 }
 
